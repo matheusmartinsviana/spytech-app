@@ -1,10 +1,17 @@
-import puppeteer from 'puppeteer';
+// lib/scraping.ts
+import puppeteer from 'puppeteer-core';
+
+const BROWSERLESS_WS = process.env.BROWSERLESS_WS || '';
+
+if (!BROWSERLESS_WS) {
+  throw new Error('❌ Variável BROWSERLESS_WS não está definida!');
+}
 
 export const getTopSearchResults = async (query: string): Promise<string[]> => {
   console.log(`🔍 Buscando no Bing: "${query}"`);
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: BROWSERLESS_WS,
   });
 
   const page = await browser.newPage();
@@ -16,6 +23,7 @@ export const getTopSearchResults = async (query: string): Promise<string[]> => {
 
     const searchUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}&setlang=pt-br`;
     await page.goto(searchUrl, { waitUntil: 'networkidle2' });
+
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     const urls = await page.evaluate(() => {

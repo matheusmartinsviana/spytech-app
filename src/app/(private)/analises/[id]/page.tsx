@@ -66,13 +66,13 @@ export default function AnalysisPage() {
             <Card className="mb-6">
                 <CardContent className="space-y-2 flex flex-col">
                     <div className="flex items-center mb-2">
-                        <Image
+                        {/* <Image
                             className="inline-block mr-2 rounded-full"
                             width={32}
                             height={32}
                             src={analysis.result[0]?.mainPage?.data?.faviconUrl}
                             alt={`Favicon | ${analysis.result[0]?.mainPage?.data?.pageTitle}`}
-                        />
+                        /> */}
                         <p className="text-sm text-muted-foreground">
                             {analysis.result[0]?.mainPage?.data?.pageTitle}
                         </p>
