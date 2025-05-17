@@ -1,8 +1,10 @@
+import { NEXT_BACKEND_URL } from "@/utils/constants";
+
 export const getUserAnalysisResquestCount = async (email: string) => {
   if (!email) throw new Error("Email não fornecido");
 
   const response = await fetch(
-    `http://localhost:3000/api/user/user-analysis-count`,
+    `${NEXT_BACKEND_URL}/api/user/user-analysis-count`,
     {
       method: "POST",
       headers: {

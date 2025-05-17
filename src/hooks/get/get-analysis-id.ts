@@ -1,8 +1,10 @@
+import { NEXT_BACKEND_URL } from "@/utils/constants";
+
 export const getAnalysisId = async (url: string, email: string) => {
     if (!email) throw new Error("Email não fornecido");
 
     const response = await fetch(
-        `http://localhost:3000/api/analyses/url?url=${url}&email=${email}`,
+        `${NEXT_BACKEND_URL}/api/analyses/url?url=${url}&email=${email}`,
         {
             method: "GET",
             headers: {
