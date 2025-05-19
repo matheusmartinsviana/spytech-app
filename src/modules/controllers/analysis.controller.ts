@@ -5,9 +5,8 @@ import { CompanyProfile } from '@/entities/company-profile';
 import { deleteAnalysisById } from '@/actions/analysis';
 
 export const analyzeKeywords = async (urls: string[], companyProfile: CompanyProfile) => {
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: `wss://chrome.browserless.io?token=${process.env.BROWSERLESS_TOKEN}`,
   });
 
   const insights = [];
@@ -19,14 +18,8 @@ export const analyzeKeywords = async (urls: string[], companyProfile: CompanyPro
 
     const result = await scrapePage(page, url);
 
-    if (!result) {
-      console.error(`Erro ao analisar a URL: ${url}`);
-      await page.close();
-      continue;
-    }
-
-    if (!result.data || !result.data.pageTitle || !result.fullTextContent) {
-      console.error(`Dados insuficientes para a URL: ${url}`);
+    if (!result || !result.data || !result.data.pageTitle || !result.fullTextContent) {
+      console.error(`Erro ao analisar a URL ou dados insuficientes: ${url}`);
       await page.close();
       continue;
     }
@@ -46,7 +39,6 @@ export const analyzeKeywords = async (urls: string[], companyProfile: CompanyPro
   await browser.close();
   return { results: insights };
 };
-
 
 export const deleteAnalysis = async (id: string) => {
   const message = await deleteAnalysisById(id);

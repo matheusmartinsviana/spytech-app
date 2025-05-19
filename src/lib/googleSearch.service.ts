@@ -2,9 +2,9 @@ import puppeteer from 'puppeteer';
 
 export const getTopSearchResults = async (query: string): Promise<string[]> => {
   console.log(`🔍 Buscando no Bing: "${query}"`);
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: `wss://chrome.browserless.io?token=${process.env.BROWSERLESS_TOKEN}`,
   });
 
   const page = await browser.newPage();
