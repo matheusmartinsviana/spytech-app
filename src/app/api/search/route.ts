@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTopSearchResults } from '@/lib/googleSearch.service';
+import { getTopSearchResults } from '@/modules/services/google-search.service';
 import { requireAuth } from '@/lib/auth/auth';
 
 export async function GET(req: NextRequest) {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: 'Usuário não autenticado.' }, { status: 401 });
   }
-
+  
   const { searchParams } = new URL(req.url);
   const keywords = searchParams.get('keywords');
 

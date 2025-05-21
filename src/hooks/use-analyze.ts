@@ -24,7 +24,7 @@ export function useAnalyze() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    toast.loading("Iniciando análise...");
+    toast.loading("Carregando análise...");
     try {
       const email = await getCurrentUserEmail();
       if (!email) throw new Error("Usuário não autenticado");
@@ -42,16 +42,32 @@ export function useAnalyze() {
       if (!userId) throw new Error("Usuário não encontrado");
 
       if (mode === "keywords") {
+        
+        toast.info(`🔍 Buscando URLs para: ${input}...`);
+        
+        setTimeout(() => {
+          toast.dismiss();
+          toast.loading("Filtrando pelos resultados mais relevantes...");
+        }, 3000);
+
         const { urls } = await getUrlsByKeywords(input);
+        toast.success("URLs encontradas com sucesso! 🤖");
         setUrlsFound(urls.slice(0, 3));
         setShowModal(true);
-        toast.success("URLs encontradas com sucesso!");
       } else {
+        toast.dismiss();
+        toast.loading(`🔍 Analisando URL: ${input}`);
+
+        setTimeout(() => {
+          toast.dismiss();
+            toast.loading("Extraindo dados do concorrente... 🕵️‍♂️");
+        }, 3000);
         const urls = [input];
         const { results } = await analyzeUrls(
           urls,
           companyProfile as CompanyProfile,
         );
+        toast.success("Salvando dados da análise... 💾");
         const analysis = await createAnalysisRequest({
           userId: userId.id,
           competitorName: results[0]?.mainPage?.pageTitle,
@@ -60,7 +76,7 @@ export function useAnalyze() {
           result: results,
         });
         setAnalysisIds([analysis.id]);
-        toast.success("Análise concluída! Redirecionando...");
+        toast.success("Análise salva com sucesso! ✅"); 
         router.push(`/analises/${analysis.id}`);
       }
     } catch (error) {

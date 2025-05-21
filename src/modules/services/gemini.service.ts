@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { generatePrompt } from './prompt';
 import { CompanyProfile } from '@/entities/company-profile';
+import { generatePrompt } from '@/lib/prompt';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 

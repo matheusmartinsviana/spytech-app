@@ -113,7 +113,7 @@ export default function AnalysisPage() {
                cursor-not-allowed opacity-90"
                             >
                                 <LockIcon className="w-4 h-4 text-gray-500" />
-                                Analisar subdomínios
+                                Analisar todas as páginas
                             </button>
 
                             <span className="absolute top-[-10px] right-[-10px] bg-blue-900 text-xs text-white px-2 py-0.5 rounded-full shadow-sm animate-pulse">

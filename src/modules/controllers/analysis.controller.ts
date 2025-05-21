@@ -1,8 +1,8 @@
 import puppeteer from 'puppeteer';
 import { scrapePage } from '@/lib/puppeteerUtils';
-import { analyzeWithGemini } from '@/lib/gemini.service';
 import { CompanyProfile } from '@/entities/company-profile';
 import { deleteAnalysisById } from '@/actions/analysis';
+import { analyzeWithGemini } from '../services/gemini.service';
 
 export const analyzeKeywords = async (urls: string[], companyProfile: CompanyProfile) => {
   const browser = await puppeteer.connect({

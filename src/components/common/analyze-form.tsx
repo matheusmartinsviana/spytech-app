@@ -50,13 +50,14 @@ export function AnalyzeForm() {
                     <SelectValue placeholder="Selecione o modo" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="keywords">Palavras-chave</SelectItem>
-                    <SelectItem value="link">Link Direto</SelectItem>
+                    <SelectItem disabled={loading} value="keywords">Palavras-chave</SelectItem>
+                    <SelectItem disabled={loading} value="link">Link Direto</SelectItem>
                 </SelectContent>
             </Select>
 
             <div className="flex flex-row w-full gap-4">
                 <Input
+                    disabled={loading}
                     placeholder={mode === "keywords" ? "Digite as palavras-chave..." : "Digite o link..."}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
