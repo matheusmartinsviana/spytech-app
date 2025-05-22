@@ -42,14 +42,8 @@ export function useAnalyze() {
       if (!userId) throw new Error("Usuário não encontrado");
 
       if (mode === "keywords") {
-        
         toast.info(`🔍 Buscando URLs para: ${input}...`);
-        
-        setTimeout(() => {
-          toast.dismiss();
-          toast.loading("Filtrando pelos resultados mais relevantes...");
-        }, 3000);
-
+        toast.loading("Filtrando pelos resultados mais relevantes...");
         const { urls } = await getUrlsByKeywords(input);
         toast.success("URLs encontradas com sucesso! 🤖");
         setUrlsFound(urls.slice(0, 3));
@@ -57,11 +51,7 @@ export function useAnalyze() {
       } else {
         toast.dismiss();
         toast.loading(`🔍 Analisando URL: ${input}`);
-
-        setTimeout(() => {
-          toast.dismiss();
-            toast.loading("Extraindo dados do concorrente... 🕵️‍♂️");
-        }, 3000);
+        toast.loading("Extraindo dados do concorrente... 🕵️‍♂️");
         const urls = [input];
         const { results } = await analyzeUrls(
           urls,
@@ -76,7 +66,7 @@ export function useAnalyze() {
           result: results,
         });
         setAnalysisIds([analysis.id]);
-        toast.success("Análise salva com sucesso! ✅"); 
+        toast.success("Análise salva com sucesso! ✅");
         router.push(`/analises/${analysis.id}`);
       }
     } catch (error) {
